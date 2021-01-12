@@ -3,35 +3,17 @@
 {% block content %}
 <form class="form-signin" method="POST" action='' >{% csrf_token %}
   <img class="mb-4" src="../../assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
-  <!-- <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1> -->
   <h1 class="h3 mb-3 font-weight-normal">Please sign up</h1>
   {% if error %}
     {{ error }}
   {% endif %}
-
-
-  <!-- <label for="inputEmail" class="sr-only">Email address</label> -->
   <label for="inputEmail" class="sr-only">メールアドレス</label>
-  <!-- <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus> -->
   <input type="text" id="inputEmail" class="form-control" name='username' placeholder="username" required autofocus>
-  <!-- <label for="inputPassword" class="sr-only">Password</label> -->
   <label for="inputPassword" class="sr-only">パスワード</label>
-  <!-- <input type="password" id="inputPassword" class="form-control" placeholder="Password" required> -->
   <input type="password" id="inputPassword" class="form-control" name='password' placeholder="パスワード" required>
   <div class="checkbox mb-3">
   </div>
-  <!-- <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button> -->
   <button class="btn btn-lg btn-primary btn-block" type="submit">サインイン</button>
   <p class="mt-5 mb-3 text-muted">&copy; 2017-2018</p>
 </form>
-
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-<script>
-  window.jQuery || document.write('<script src="/docs/4.5/assets/js/vendor/jquery-slim.min.js"><\/script>')
-</script><script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script><script src="/docs/4.5/assets/js/vendor/anchor.min.js"></script>
-<script src="/docs/4.5/assets/js/vendor/clipboard.min.js"></script>
-<script src="/docs/4.5/assets/js/vendor/bs-custom-file-input.min.js"></script>
-<script src="/docs/4.5/assets/js/src/application.js"></script>
-<script src="/docs/4.5/assets/js/src/search.js"></script>
-<script src="/docs/4.5/assets/js/src/ie-emulation-modes-warning.js"></script>
 {% endblock content %}
