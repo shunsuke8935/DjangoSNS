@@ -1,7 +1,9 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import redirect
+from .models import SnsModel
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
@@ -26,11 +28,39 @@ def loginfunc(request):
 
         if user is not None:
             login(request, user)
-            return redirect('signup')
+            return redirect('list')
         else:
             print("no user")
             return redirect('login')
     return render(request, 'login.html')
 
+@login_required
 def listfunc(request):
-    return render(request, 'list.html')
+    object_list = SnsModel.objects.all()
+    return render(request, 'list.html', {"object_list": object_list})
+
+def logoutfunc(request):
+    logout(request)
+    return redirect('login')
+
+def detailfunc(request, pk):
+    object = SnsModel.objects.get(pk=pk)
+    return render(request, 'detail.html', {'object': object})
+
+def goodfunc(request, pk):
+    post = SnsModel.objects.get(pk=pk)
+    post.good = post.good + 1
+    post.save()
+    return redirect('list')
+
+def readfunction(request, pk):
+    post = SnsModel.objects.get(pk=pk)
+    read_check = request.user.get_username()
+    if read_check in post.readtext:
+        return redirect('list')
+    else:
+        post.read = post.read +1
+        post.readtext = post.readtext + ' ' + read_check
+        post.save()
+        return redirect('list')
+
