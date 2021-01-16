@@ -19,7 +19,7 @@ def signupfunc(request):
         else:
             user = User.objects.create_user(username, '', password)
             print(request.POST)
-            return render(request, 'signup.html', {'some':100})
+            return render(request, 'login.html', {'some':100})
     return render(request, 'signup.html', {'some':100})
 
 def loginfunc(request):
