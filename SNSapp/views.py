@@ -4,6 +4,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import redirect
 from .models import SnsModel
 from django.contrib.auth.decorators import login_required
+from django.views.generic import CreateView
+from django.urls import reverse_lazy
 
 # Create your views here.
 
@@ -63,4 +65,11 @@ def readfunction(request, pk):
         post.readtext = post.readtext + ' ' + read_check
         post.save()
         return redirect('list')
+
+class SnsCreate(CreateView):
+    template_name = 'create.html'
+    model = SnsModel
+    fields = ('title','content','images','author')
+    success_url = reverse_lazy('list')
+
 

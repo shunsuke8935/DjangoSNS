@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import signupfunc, loginfunc, listfunc, logoutfunc, detailfunc, goodfunc, readfunction
+from .views import signupfunc, loginfunc, listfunc, logoutfunc, detailfunc, goodfunc, readfunction, SnsCreate
 
 urlpatterns = [
     path('signup/', signupfunc, name='signup'),
@@ -8,5 +8,6 @@ urlpatterns = [
     path('logout/', logoutfunc, name='logout'),
     path('detail/<int:pk>', detailfunc, name='detail'),
     path('good/<int:pk>', goodfunc, name='good'),
-    path('read/<int:pk>', readfunction, name='read')
+    path('read/<int:pk>', readfunction, name='read'),
+    path('create/', SnsCreate.as_view(), name='create')
 ]

@@ -15,7 +15,9 @@
             <p>タイトル:{{ object.title }}</p>
             <p>投稿者:{{ object.author }}</p>
             <p>内容:{{ object.content }}</p>
-            <p><img src='{{ object.images.url }}' width=300></p>
+            {% if object.images %}
+                <p><img src='{{ object.images.url }}' width=300></p>
+            {% endif %}
             <a href="{% url 'good' object.pk %}" class="btn btn-primary" role="button" aria-pressed="true">いいね{{ object.good }}</a>
             <a href="{% url 'read' object.pk %}" class="btn btn-secondary" role="button" aria-pressed="true">既読にする</a>
         </div>
