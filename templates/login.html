@@ -31,19 +31,28 @@
         ログイン
       </div>
     </h2>
+    <!--エラーメッセージ-->
+    {% if error %}
+      <div class="ui negative message">
+        <i class="close icon" onclick="closeFunc()"></i>
+        <div class="header"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+          {{ error }}
+        </font></font></div>
+        </div>
+    {% endif %}
     <form class="ui large form" method="POST" action=''>{% csrf_token %}
       <div class="ui stacked segment">
         <div class="field">
           <!--senmatic-uiからダウンロードしてstatic/themes/assetsに配置-->
           <div class="ui left icon input">
             <i class="user icon"></i>
-            <input type="text" name="username" placeholder="username">
+            <input type="text" name="username" placeholder="username" required>
           </div>
         </div>
         <div class="field">
           <div class="ui left icon input">
             <i class="lock icon"></i>
-            <input type="password" name="password" placeholder="password">
+            <input type="password" name="password" placeholder="password" minlength="8" required>
           </div>
         </div>
         <button class="ui fluid large green submit button" type="submit">ログイン</button>

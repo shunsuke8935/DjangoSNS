@@ -1,0 +1,110 @@
+<!-- create画面 -->
+{% extends 'content_page_base.html' %}
+
+{% load static %}
+
+{% block customcss %}
+{% endblock customcss %}
+
+{% block header %}
+{% endblock header %}
+
+{% block content %}
+<div class="ui main text container">
+    <div class="ui two column doubling stackable grid container">
+        <!--１列目-->
+        <div class="row">
+            <!--使用カラム-->
+            <div class="column">
+
+                {% if appuser.images %}
+                    <img class="ui centered small circular image" src='{{ appuser.images.url }}'>
+                {% else %}
+                    <i class="massive user circle outline icon"></i>
+                {% endif  %}
+            </div>
+            <div class="column">
+                <h1 class="ui center aligned header"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+                    {{ appuser.name }}
+                    </font></font>
+                </h1>
+                <!--カラム内1列目-->
+                <div class="ui right aligned three column grid">
+                    <div class="row"> 
+                        <div class="column">
+                            <h4 class="ui header"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+                                投稿数
+                                </font></font><div class="sub header"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">10</font></font></div>
+                            </h4>
+                        </div>
+                        <div class="column">
+                            <h4 class="ui header"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+                                フォロワー
+                                </font></font><div class="sub header"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">10</font></font></div>
+                            </h4>
+                        </div>
+                        <div class="column">
+                            <h4 class="ui header"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+                                フォロー中
+                                </font></font><div class="sub header"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">10</font></font></div>
+                            </h4>
+                        </div>            
+                    </div>
+                </div>
+            </div>
+            <!--カラム終-->
+        </div>
+    </div>
+    <div class="ui column doubling stackable grid container">
+        <!--2列目-->
+        <div class="row">
+            <div class="column">
+                <div class="ui top attached tabular menu">
+                    <a class="item active" data-tab="first" id="first" onclick="changetag(this.id)"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">プロフィール</font></font></a>
+                    <a class="item" data-tab="second" id="second" onclick="changetag(this.id)"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">投稿</font></font></a>
+                    <a class="item" data-tab="third" id="third" onclick="changetag(this.id)"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">フォロワー</font></font></a>
+                </div>
+                <div class="ui bottom attached tab segment active" data-tab="first" id="first_first"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+                    <!--タブ１コンテンツ-->
+                    <div class="ui divided selection list">
+                        <div class="item">
+                            <div class="ui teal horizontal label"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">名前</font></font></div><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+                            {% if appuser.name %}{{ appuser.name }}{% else %}なし{% endif %}
+                        </font></font></div>
+                        <div class="item">
+                            <div class="ui teal horizontal label"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">年齢</font></font></div><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+                            {% if appuser.age %}{{ appuser.age }}{% else %}なし{% endif %}
+                        </font></font></div>
+                        <div class="item">
+                            <div class="ui teal horizontal label"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">会社</font></font></div><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+                            {% if appuser.company %}{{ appuser.company }}{% else %}なし{% endif %}
+                        </font></font></div>
+                        <div class="item">
+                            <div class="ui teal horizontal label"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">趣味</font></font></div><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+                            {% if appuser.hoby %}{{ appuser.hoby }}{% else %}なし{% endif %}
+                        </font></font></div>
+                        <div class="item">
+                            <div class="ui teal horizontal label"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">出身</font></font></div><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+                            {% if appuser.birthplace %}{{ appuser.birthplace }}{% else %}なし{% endif %}
+                        </font></font></div>
+                        <div class="item">
+                            <div class="ui teal horizontal label"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">自己紹介</font></font></div><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+                            {% if appuser.introduction %}{{ appuser.introduction }}{% else %}なし{% endif %}
+                        </font></font></div>
+                      </div>
+                      <!--編集ボタン-->
+                      <a class="ui blue button" href="{% url 'mypageupdate' appuser.pk %}"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+                        プロフィールを編集する
+                      </font></font></a>
+                </font></font></div>
+                <div class="ui bottom attached tab segment" data-tab="second" id="second_second"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+                    投稿
+                </font></font></div>
+                <div class="ui bottom attached tab segment" data-tab="third" id="third_third"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+                    フォロワー
+                </font></font></div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
