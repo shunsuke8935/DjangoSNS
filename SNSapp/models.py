@@ -33,6 +33,7 @@ class SnsModel(models.Model):
 class Follow(models.Model):
     user = models.ForeignKey(AppUsers,null=True,blank=True,on_delete=models.CASCADE,related_name='follow_user')
     user_2 = models.ForeignKey(AppUsers,null=True,blank=True,on_delete=models.CASCADE,related_name='followed_user')
+    shonin_status = models.IntegerField(null=True, blank=True,  default=0) 
 
 
 

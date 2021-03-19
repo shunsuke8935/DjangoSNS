@@ -47,8 +47,31 @@ def loginfunc(request):
 
 @login_required
 def listfunc(request):
-    object_list = SnsModel.objects.all()
-    return render(request, 'list.html', {"object_list": object_list})
+    context = {}
+    context_list = []
+    print(request.user)
+    user = User.objects.filter(username=request.user).first()
+    print(user.id)
+    #カレントユーザー
+    appuser = AppUsers.objects.filter(user=user).first()
+    print(appuser)
+    Follow.objects.filter()
+    sns_list = SnsModel.objects.all()
+
+    for sns_row in sns_list:
+        sns_dict = {}
+        sns_dict["sns_obj"] = sns_row
+        sns_dict["current_user"] = appuser
+        follow_check = Follow.objects.filter(user=appuser,user_2=sns_row.user).first()
+        if follow_check:
+            follow_check = True
+        else:
+            follow_check = False
+        sns_dict["follow_check"] = follow_check
+        context_list.append(sns_dict)
+    context["sns_context"] = context_list
+    print(context)
+    return render(request, 'list.html', context)
 
 def logoutfunc(request):
     logout(request)
@@ -79,29 +102,78 @@ def mypagefunc(request, pk):
     print("#######")
     print(request.user.get_username)
     appuser = AppUsers.objects.filter(user=pk).first()
-    return render(request, 'mypage.html', {"appuser":appuser})
+    user_posts = appuser.snsmodel_set.all()
+    friend_list = appuser.follow_user.filter(user=appuser.id)
+    return render(request, 'mypage.html', {"appuser":appuser, "user_posts": user_posts, "friend_list": friend_list})
 
 def mypageUpdatefunc(request, pk):
     if request.method == "GET":
         appuser = AppUsers.objects.filter(pk=pk).first()
-        return render(request, 'mypageupdate.html', {"appuser":appuser})
+        user_posts = appuser.snsmodel_set.all()
+        return render(request, 'mypageupdate.html', {"appuser":appuser, "user_posts": user_posts})
+    
     if request.method == "POST":
-        print(request.POST['name'])
         appuser = AppUsers.objects.filter(pk=pk).first()
-        appuser.name = request.POST['name']
-        appuser.age = request.POST['age']
-        appuser.company = request.POST['company']
-        appuser.hoby = request.POST['hoby']
-        appuser.birthplace = request.POST['birthplace']
-        appuser.introduction = request.POST['introduction']
+        if request.FILES:
+            appuser.images = request.FILES['images']
+        else:
+            appuser.name = request.POST['name']
+            appuser.age = request.POST['age']
+            appuser.company = request.POST['company']
+            appuser.hoby = request.POST['hoby']
+            appuser.birthplace = request.POST['birthplace']
+            appuser.introduction = request.POST['introduction']
         appuser.save()
         return redirect('mypage', pk=appuser.user.pk)
+
+def snsCreate(request):
+    if request.method == "GET":
+        return render(request, 'create.html')
+    if request.method == "POST":
+        print(request.POST)
+        print(request.FILES['images'])
+        sns = SnsModel()
+        sns.title = request.POST["title"]
+        sns.content = request.POST["content"]
+        sns.images = request.FILES["images"]
+        sns.author = request.POST["author"]
+        user_id = request.POST["user"]
+        appuser = AppUsers.objects.filter(user=user_id).first()
+        sns.user = appuser
+        sns.save()
+        return redirect('list')
+
+def followfunc(request, user_id, followed_user_id):    
+    appuser_id = AppUsers.objects.filter(user=user_id).first()
+    appuser2_id = AppUsers.objects.filter(id=followed_user_id).first()
+    follow_object = Follow.objects.filter(user=appuser_id,user_2=appuser2_id).first()
+    followed_object = Follow.objects.filter(user=appuser2_id,user_2=appuser_id).first()
+    print(user_id,followed_user_id)
+    #すでに対象ユーザーをフォローしている場合はリダイレクト
+    if follow_object:
+        return redirect('list')
+    #対象ユーザーからフォローされていればフォローを承認処理
+    elif followed_object:
+        if followed_object.shonin_status == 0:
+            followed_object.shonin_status = 1
+            followed_object.save()
+        else:
+            #すでに承認済み
+            return redirect('list')
+    else:
+        follow_object = Follow()
+        follow_object.user = appuser_id
+        follow_object.user_2 = appuser2_id
+        follow_object.save()
+        return redirect('list')
+
+
 
 
 class SnsCreate(CreateView):
     template_name = 'create.html'
     model = SnsModel
-    fields = ('title','content','images','author')
+    fields = ('title','content','images','author','user')
     success_url = reverse_lazy('list')
 
 

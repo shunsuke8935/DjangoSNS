@@ -18,9 +18,9 @@
             <div class="column">
 
                 {% if appuser.images %}
-                    <img class="ui centered small circular image" src='{{ appuser.images.url }}'>
+                    <img class="ui centered fluid circular image" src='{{ appuser.images.url }}'>
                 {% else %}
-                    <i class="massive user circle outline icon"></i>
+                    <img class="ui centered fluid bordered circular image" src="/media/default_user.png">
                 {% endif  %}
             </div>
             <div class="column">
@@ -98,10 +98,35 @@
                       </font></font></a>
                 </font></font></div>
                 <div class="ui bottom attached tab segment" data-tab="second" id="second_second"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
-                    投稿
+                    <div class="ui tiny images">
+                        {% if user_posts %}
+                        {% for post in user_posts %}
+                        <img class="ui image" src="{{post.images.url}}">
+                        {% endfor %}
+                        {% else %}
+                        {% endif %}
+                    </div>
                 </font></font></div>
                 <div class="ui bottom attached tab segment" data-tab="third" id="third_third"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
-                    フォロワー
+                    <div class="">
+                        <div class="ui four doubling cards">
+                            {% for friend_row in friend_list %}
+                            {% if friend_row.user_2.images %}
+                            <div class="card">
+                              <div class="image">
+                                <img src="{{ friend_row.user_2.images.url }}">
+                              </div>
+                            </div>
+                            {% else %}
+                            <div class="card">
+                                <div class="image">
+                                  <img src="/media/default_user.png">
+                                </div>
+                            </div>
+                            {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
                 </font></font></div>
             </div>
         </div>

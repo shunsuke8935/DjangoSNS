@@ -123,7 +123,14 @@
     <script>
       $(document).ready(function() {
         $('.ui.tabular.menu .item').tab();
+        $('#file_test').hide()
         });
+
+      //写真アップロード後ボタン変異
+      const updateImage = () => {
+        $("#imgtext").text("写真を反映")
+        $("#imglavel").attr('for', 'filebutton')
+      }
 
       //タブ切り替え
       const changetag = (eleID) => {

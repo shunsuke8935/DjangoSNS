@@ -15,24 +15,39 @@
     <p>This is a basic fixed menu template using fixed size containers.</p>
     <p>A text container is used for the main container, which is useful for single column layouts</p>
     <!--カード挿入-->
-    {% for object_row in object_list %}
+    {% for object_row in sns_context %}
     <div class="ui centered card">
       <div class="content">
         <div class="right floated meta">14h</div>
-        <img class="ui avatar image" src="/images/avatar/large/elliot.jpg"> 
-        {{ object_row.author }}
+        {% if object_row.sns_obj.user.images %}
+        <img class="ui avatar image" src="{{ object_row.sns_obj.user.images.url }}">
+        {% else %}
+        <img class="ui avatar image" src="/media/default_user.png"> 
+        {% endif %}
+        {{ object_row.sns_obj.author }}
+        {% if object_row.sns_obj.user and object_row.sns_obj.user.user.id != user.id %}
+        {% if object_row.follow_check %}
+        <a class="ui small primary button" href="{% url 'followfunc' user.pk object_row.sns_obj.user.id  %}"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+          フォロー済み
+        </font></font></a>
+        {% else %}
+        <a class="ui small primary button" href="{% url 'followfunc' user.pk object_row.sns_obj.user.id  %}"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+          フォローする
+        </font></font></a>
+        {% endif %}
+        {% endif %}
       </div>
-      {% if object_row.images %}
+      {% if object_row.sns_obj.images %}
       <div class="image">
-        <img src='{{ object_row.images.url }}'>
+        <img src='{{ object_row.sns_obj.images.url }}'>
       </div>
       {% endif %}
       <!--投稿text挿入-->
       <div class="content">
-        <a class="header" href="{% url 'detail' object_row.pk %}">
+        <a class="header" href="{% url 'detail' object_row.sns_obj.pk %}">
           <font style="vertical-align: inherit;">
             <font style="vertical-align: inherit;">
-              {{ object_row.title }}
+              {{ object_row.sns_obj.title }}
             </font>
           </font>
         </a>
@@ -40,7 +55,7 @@
           <span class="date">
             <font style="vertical-align: inherit;">
               <font style="vertical-align: inherit;">
-                {{ object_row.read }} read
+                {{ object_row.sns_obj.read }} read
               </font>
             </font>
           </span>
@@ -48,16 +63,16 @@
         <div class="description">
           <font style="vertical-align: inherit;">
             <font style="vertical-align: inherit;">
-              {{ object_row.content }}
+              {{ object_row.sns_obj.content }}
             </font>
           </font>
         </div>
       </div>
       <!--投稿テキスト終了-->
       <div class="content">
-        <a class="right floated" href="{% url 'good' object_row.pk %}">
+        <a class="right floated" href="{% url 'good' object_row.sns_obj.pk %}">
           <i class="heart outline like icon"></i>
-          {{ object_row.good }} likes
+          {{ object_row.sns_obj.good }} likes
         </a>
         <i class="comment icon"></i>
         0 comments

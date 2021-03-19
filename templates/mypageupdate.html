@@ -17,9 +17,23 @@
             <!--使用カラム-->
             <div class="column">
                 {% if appuser.images %}
-                    <img class="ui centered small circular image" src='{{ appuser.images.url }}'>
+                    <img class="ui fluid circular image" src='{{ appuser.images.url }}'>
+                    <label id="imglavel" for="file_test" class="ui primary button"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+                        <span id="imgtext">写真をアップロード</span>
+                        <form id="imgform" class="ui form" action="" method="POST" enctype="multipart/form-data" hidden>{% csrf_token %}
+                            <input id="file_test" type="file" name="images" class="ui primary button" onchange="updateImage()" form="imgform">
+                            <button id="filebutton" class="ui primary button" type="submit" form="imgform" hidden>写真を反映</button>
+                        </form>
+                    </font></font></label>
                 {% else %}
-                    <i class="massive user circle outline icon"></i>
+                    <img class="ui fluid circular image" src="/media/default_user.png">
+                    <label id="imglavel" for="file_test" class="ui primary button"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+                        <span id="imgtext">写真をアップロード</span>
+                        <form id="imgform" class="ui form" action="" method="POST" enctype="multipart/form-data">{% csrf_token %}
+                            <input id="file_test" type="file" name="images" class="ui primary button" onchange="updateImage()" form="imgform">
+                            <button id="filebutton" class="ui primary button" type="submit" form="imgform" hidden>写真を反映</button>
+                        </form>
+                    </font></font></label>
                 {% endif  %}
             </div>
             <div class="column">
@@ -66,37 +80,44 @@
                 <div class="ui bottom attached tab segment active" data-tab="first" id="first_first"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
                     <!--タブ１コンテンツ-->
                     <div class="ui divided selection list">
-                        <form class="ui form" action="" method="POST" enctype="multipart/form-data">{% csrf_token %}
+                        <form id="mainform" class="ui form" action="" method="POST" enctype="multipart/form-data">{% csrf_token %}
                             <div class="inline field">
                                 <label class="ui teal horizontal label">名前</label>
-                                <input type="text" name="name" placeholder="{{appuser.name}}">
+                                <input type="text" name="name" value="{{appuser.name}}" placeholder="" form="mainform">
                             </div>
                             <div class="inline field">
                                 <label class="ui teal horizontal label">年齢</label>
-                                <input type="text" name="age" placeholder="{{appuser.age}}">
+                                <input type="number" name="age" value="{{appuser.age}}" placeholder="" form="mainform"> 
                             </div>
                             <div class="inline field">
                                 <label class="ui teal horizontal label">会社</label>
-                                <input type="text" name="company" placeholder="{{appuser.company}}">
+                                <input type="text" name="company" value="{{appuser.company}}" placeholder="" form="mainform">
                             </div>
                             <div class="inline field">
                                 <label class="ui teal horizontal label">趣味</label>
-                                <input type="text" name="hoby" placeholder="{{appuser.hoby}}">
+                                <input type="text" name="hoby" value="{{appuser.hoby}}" placeholder="" form="mainform">
                             </div>
                             <div class="inline field">
                                 <label class="ui teal horizontal label">出身</label>
-                                <input type="text" name="birthplace" placeholder="{{appuser.birthplace}}">
+                                <input type="text" name="birthplace" value="{{appuser.birthplace}}" placeholder="" form="mainform">
                             </div>
                             <div class="field">
                                 <label class="ui teal horizontal label">自己紹介</label>
-                                <textarea type="text" name="introduction" placeholder="{{appuser.introduction}}"></textarea>
+                                <textarea type="text" name="introduction" placeholder="" form="mainform">{{appuser.introduction}}</textarea>
                             </div>
                             <button class="ui primary button" type="submit">保存</button>
                         </form>
                     </div>
                 </font></font></div>
                 <div class="ui bottom attached tab segment" data-tab="second" id="second_second"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
-                    投稿
+                    <div class="ui tiny images">
+                        {% if user_posts %}
+                        {% for post in user_posts %}
+                        <img class="ui image" src="{{post.images.url}}">
+                        {% endfor %}
+                        {% else %}
+                        {% endif %}
+                    </div>
                 </font></font></div>
                 <div class="ui bottom attached tab segment" data-tab="third" id="third_third"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
                     フォロワー
