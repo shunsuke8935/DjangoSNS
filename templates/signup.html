@@ -1,0 +1,70 @@
+{% extends 'base2.html' %}
+{% load static %}
+
+{% block customcss %}
+<!--senmatic-uiからzipファイルをダウンロードしてstatic以下に配置-->
+<link rel="stylesheet" type="text/css" href="{% static 'sign.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'components/reset.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'components/site.css' %}">
+
+<link rel="stylesheet" type="text/css" href="{% static 'components/container.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'components/grid.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'components/header.css'%}">
+<link rel="stylesheet" type="text/css" href="{% static 'components/image.css'%}">
+<link rel="stylesheet" type="text/css" href="{% static 'components/menu.css'%}">
+
+<link rel="stylesheet" type="text/css" href="{% static 'components/divider.css'%}">
+<link rel="stylesheet" type="text/css" href="{% static 'components/segment.css'%}">
+<link rel="stylesheet" type="text/css" href="{% static 'components/form.css'%}">
+<link rel="stylesheet" type="text/css" href="{% static 'components/input.css'%}">
+<link rel="stylesheet" type="text/css" href="{% static 'components/button.css'%}">
+<link rel="stylesheet" type="text/css" href="{% static 'components/list.css'%}">
+<link rel="stylesheet" type="text/css" href="{% static 'components/message.css'%}">
+<link rel="stylesheet" type="text/css" href="{% static 'components/icon.css'%}">
+{% endblock customcss %}
+
+{% block content %}
+<div class="ui middle aligned center aligned grid">
+  <div class="column">
+    <h2 class="ui teal image header">
+      <div class="content">
+        サインアップ
+      </div>
+    </h2>
+    <!--エラーメッセージ-->
+    {% if error %}
+      <div class="ui negative message">
+        <i class="close icon" onclick="closeFunc()"></i>
+        <div class="header"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+          {{ error }}
+        </font></font></div>
+        </div>
+    {% endif %}
+    <form class="ui large form" method="POST" action=''>{% csrf_token %}
+      <div class="ui stacked segment">
+        <div class="field">
+          <!--senmatic-uiからダウンロードしてstatic/themes/assetsに配置-->
+          <div class="ui left icon input">
+            <i class="user icon"></i>
+            <input type="text" name="username" placeholder="username" required>
+          </div>
+        </div>
+        <div class="field">
+          <div class="ui left icon input">
+            <i class="lock icon"></i>
+            <input type="password" name="password" placeholder="password" minlength="8" required>
+          </div>
+        </div>
+        <button class="ui fluid large teal submit button" type="submit">サインアップ</button>
+      </div>
+
+      <div class="ui error message"></div>
+
+    </form>
+
+    <div class="ui message">
+      <a href="{% url 'login' %}">既に登録されている方はこちら</a>
+    </div>
+  </div>
+</div>
+{% endblock content %}

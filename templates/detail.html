@@ -1,0 +1,124 @@
+{% extends 'content_page_base.html' %}
+
+{% load static %}
+
+{% block customcss %}
+{% endblock customcss %}
+
+{% block header %}
+{% endblock header %}
+
+{% block content %}
+
+  <div class="ui main text container">
+    <h1 class="ui header">Semantic UI Fixed Template</h1>
+    <p>This is a basic fixed menu template using fixed size containers.</p>
+    <p>A text container is used for the main container, which is useful for single column layouts</p>
+    <!--カード挿入-->    
+    <div class="ui centered card">
+      <div class="content">
+        <div class="right floated meta">14h</div>
+        <img class="ui avatar image" src="/images/avatar/large/elliot.jpg"> 
+        {{ object.author }}
+      </div>
+      {% if object.images %}
+      <div class="image">
+        <img src='{{ object.images.url }}'>
+      </div>
+      {% endif %}
+      <!--投稿text挿入-->
+      <div class="content">
+        <a class="header" href="{% url 'detail' object.pk %}">
+          <font style="vertical-align: inherit;">
+            <font style="vertical-align: inherit;">
+              {{ object.title }}
+            </font>
+          </font>
+        </a>
+        <div class="meta">
+          <span class="date">
+            <font style="vertical-align: inherit;">
+              <font style="vertical-align: inherit;">
+                {{ object.read }} read
+              </font>
+            </font>
+          </span>
+        </div>
+        <div class="description">
+          <font style="vertical-align: inherit;">
+            <font style="vertical-align: inherit;">
+              {{ object.content }}
+            </font>
+          </font>
+        </div>
+      </div>
+      <!--投稿テキスト終了-->
+      <div class="content">
+        <a class="right floated" href="{% url 'good' object.pk %}">
+          <i class="heart outline like icon"></i>
+          {{ object.good }} likes
+        </a>
+        <a>   </a>
+        <a class="right floated" href="{% url 'good' object.pk %}">
+            <i class="envelope open icon"></i>
+            {{ object.read }} Read
+          </a>
+        <i class="comment icon"></i>
+        3 comments
+      </div>
+      <div class="extra content">
+        <div class="ui large transparent left icon input">
+          <i class="heart outline icon"></i>
+          <input type="text" placeholder="Add Comment...">
+        </div>
+      </div>
+    </div>
+    <!--カード終了-->
+  </div>
+
+  <div class="ui inverted vertical footer segment">
+    <div class="ui center aligned container">
+      <div class="ui stackable inverted divided grid">
+        <div class="three wide column">
+          <h4 class="ui inverted header">Group 1</h4>
+          <div class="ui inverted link list">
+            <a href="#" class="item">Link One</a>
+            <a href="#" class="item">Link Two</a>
+            <a href="#" class="item">Link Three</a>
+            <a href="#" class="item">Link Four</a>
+          </div>
+        </div>
+        <div class="three wide column">
+          <h4 class="ui inverted header">Group 2</h4>
+          <div class="ui inverted link list">
+            <a href="#" class="item">Link One</a>
+            <a href="#" class="item">Link Two</a>
+            <a href="#" class="item">Link Three</a>
+            <a href="#" class="item">Link Four</a>
+          </div>
+        </div>
+        <div class="three wide column">
+          <h4 class="ui inverted header">Group 3</h4>
+          <div class="ui inverted link list">
+            <a href="#" class="item">Link One</a>
+            <a href="#" class="item">Link Two</a>
+            <a href="#" class="item">Link Three</a>
+            <a href="#" class="item">Link Four</a>
+          </div>
+        </div>
+        <div class="seven wide column">
+          <h4 class="ui inverted header">Footer Header</h4>
+          <p>Extra space for a call to action inside the footer that could help re-engage users.</p>
+        </div>
+      </div>
+      <div class="ui inverted section divider"></div>
+      <img src="assets/images/logo.png" class="ui centered mini image">
+      <div class="ui horizontal inverted small divided link list">
+        <a class="item" href="#">Site Map</a>
+        <a class="item" href="#">Contact Us</a>
+        <a class="item" href="#">Terms and Conditions</a>
+        <a class="item" href="#">Content</a>
+      </div>
+    </div>
+  </div>
+{% endblock content %}

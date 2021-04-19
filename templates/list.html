@@ -1,0 +1,90 @@
+{% extends 'content_page_base.html' %}
+
+{% load static %}
+
+{% block customcss %}
+{% endblock customcss %}
+
+{% block header %}
+{% endblock header %}
+
+{% block content %}
+
+  <div class="ui main text container">
+    <h1 class="ui header">Semantic UI Fixed Template</h1>
+    <p>This is a basic fixed menu template using fixed size containers.</p>
+    <p>A text container is used for the main container, which is useful for single column layouts</p>
+    <!--カード挿入-->
+    {% for object_row in sns_context %}
+    <div class="ui centered card">
+      <div class="content">
+        <div class="right floated meta">14h</div>
+        {% if object_row.sns_obj.user.images %}
+        <img class="ui avatar image" src="{{ object_row.sns_obj.user.images.url }}">
+        {% else %}
+        <img class="ui avatar image" src="/media/default_user.png"> 
+        {% endif %}
+        {{ object_row.sns_obj.author }}
+        {% if object_row.sns_obj.user and object_row.sns_obj.user.user.id != user.id %}
+        {% if object_row.follow_check %}
+        <a class="ui small primary button" href="{% url 'followfunc' user.pk object_row.sns_obj.user.id  %}"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+          フォロー済み
+        </font></font></a>
+        {% else %}
+        <a class="ui small primary button" href="{% url 'followfunc' user.pk object_row.sns_obj.user.id  %}"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+          フォローする
+        </font></font></a>
+        {% endif %}
+        {% endif %}
+      </div>
+      {% if object_row.sns_obj.images %}
+      <div class="image">
+        <img src='{{ object_row.sns_obj.images.url }}'>
+      </div>
+      {% endif %}
+      <!--投稿text挿入-->
+      <div class="content">
+        <a class="header" href="{% url 'detail' object_row.sns_obj.pk %}">
+          <font style="vertical-align: inherit;">
+            <font style="vertical-align: inherit;">
+              {{ object_row.sns_obj.title }}
+            </font>
+          </font>
+        </a>
+        <div class="meta">
+          <span class="date">
+            <font style="vertical-align: inherit;">
+              <font style="vertical-align: inherit;">
+                {{ object_row.sns_obj.read }} read
+              </font>
+            </font>
+          </span>
+        </div>
+        <div class="description">
+          <font style="vertical-align: inherit;">
+            <font style="vertical-align: inherit;">
+              {{ object_row.sns_obj.content }}
+            </font>
+          </font>
+        </div>
+      </div>
+      <!--投稿テキスト終了-->
+      <div class="content">
+        <a class="right floated" href="{% url 'good' object_row.sns_obj.pk %}">
+          <i class="heart outline like icon"></i>
+          {{ object_row.sns_obj.good }} likes
+        </a>
+        <i class="comment icon"></i>
+        0 comments
+      </div>
+      <div class="extra content">
+        <div class="ui large transparent left icon input">
+          <i class="heart outline icon"></i>
+          <input type="text" placeholder="Add Comment...">
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+    <!--カード終了-->
+  </div>
+{% endblock content %}
