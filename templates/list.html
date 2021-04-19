@@ -11,9 +11,6 @@
 {% block content %}
 
   <div class="ui main text container">
-    <h1 class="ui header">Semantic UI Fixed Template</h1>
-    <p>This is a basic fixed menu template using fixed size containers.</p>
-    <p>A text container is used for the main container, which is useful for single column layouts</p>
     <!--カード挿入-->
     {% for object_row in sns_context %}
     <div class="ui centered card">
@@ -52,13 +49,6 @@
           </font>
         </a>
         <div class="meta">
-          <span class="date">
-            <font style="vertical-align: inherit;">
-              <font style="vertical-align: inherit;">
-                {{ object_row.sns_obj.read }} read
-              </font>
-            </font>
-          </span>
         </div>
         <div class="description">
           <font style="vertical-align: inherit;">
@@ -80,7 +70,12 @@
       <div class="extra content">
         <div class="ui large transparent left icon input">
           <i class="heart outline icon"></i>
-          <input type="text" placeholder="Add Comment...">
+          <input type="text" placeholder="Add Comment...">          
+        </div>
+      </div>
+      <div class="extra content">
+        <div class="ui large transparent left icon input">          
+          <button class="ui primary button" type="submit">送信</button>
         </div>
       </div>
     </div>
@@ -88,3 +83,8 @@
     <!--カード終了-->
   </div>
 {% endblock content %}
+{% block script %}
+  const commentFunc = () =>{
+    console.log('testlist')
+  }
+{% endblock script %}

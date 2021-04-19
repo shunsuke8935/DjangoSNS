@@ -55,8 +55,7 @@ def listfunc(request):
     #カレントユーザー
     appuser = AppUsers.objects.filter(user=user).first()
     print(appuser)
-    Follow.objects.filter()
-    sns_list = SnsModel.objects.all()
+    sns_list = SnsModel.objects.all().order_by('-id')
 
     for sns_row in sns_list:
         sns_dict = {}
@@ -104,13 +103,36 @@ def mypagefunc(request, pk):
     appuser = AppUsers.objects.filter(user=pk).first()
     user_posts = appuser.snsmodel_set.all()
     friend_list = appuser.follow_user.filter(user=appuser.id)
-    return render(request, 'mypage.html', {"appuser":appuser, "user_posts": user_posts, "friend_list": friend_list})
+    followed_friend_list = appuser.followed_user.filter(user_2=appuser.id)
+    context = {
+        "appuser":appuser, 
+        "user_posts": user_posts, 
+        "friend_list": friend_list,
+        "posts_count": len(user_posts),
+        "friend_count": len(friend_list),
+        "followed_friend_list": followed_friend_list,
+        "followed_count": len(followed_friend_list)
+    }    
+
+    return render(request, 'mypage.html', context)
 
 def mypageUpdatefunc(request, pk):
     if request.method == "GET":
         appuser = AppUsers.objects.filter(pk=pk).first()
         user_posts = appuser.snsmodel_set.all()
-        return render(request, 'mypageupdate.html', {"appuser":appuser, "user_posts": user_posts})
+        friend_list = appuser.follow_user.filter(user=appuser.id)
+        followed_friend_list = appuser.followed_user.filter(user_2=appuser.id)
+        context = {
+            "appuser":appuser, 
+            "user_posts": user_posts, 
+            "friend_list": friend_list,
+            "posts_count": len(user_posts),
+            "friend_count": len(friend_list),
+            "followed_friend_list": followed_friend_list,
+            "followed_count": len(followed_friend_list)
+
+        }
+        return render(request, 'mypageupdate.html', context)
     
     if request.method == "POST":
         appuser = AppUsers.objects.filter(pk=pk).first()
@@ -143,7 +165,7 @@ def snsCreate(request):
         sns.save()
         return redirect('list')
 
-def followfunc(request, user_id, followed_user_id):    
+def followfunc(request, user_id, followed_user_id):   
     appuser_id = AppUsers.objects.filter(user=user_id).first()
     appuser2_id = AppUsers.objects.filter(id=followed_user_id).first()
     follow_object = Follow.objects.filter(user=appuser_id,user_2=appuser2_id).first()
