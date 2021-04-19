@@ -33,7 +33,12 @@ class SnsModel(models.Model):
 class Follow(models.Model):
     user = models.ForeignKey(AppUsers,null=True,blank=True,on_delete=models.CASCADE,related_name='follow_user')
     user_2 = models.ForeignKey(AppUsers,null=True,blank=True,on_delete=models.CASCADE,related_name='followed_user')
-    shonin_status = models.IntegerField(null=True, blank=True,  default=0) 
+    shonin_status = models.IntegerField(null=True, blank=True,  default=0)
 
 
-
+class Coment(models.Model):
+    comment = models.TextField(max_length=1000,null=True,blank=True)
+    #コメントを投稿したユーザー
+    comment_user = models.ForeignKey(AppUsers,null=True,blank=True,on_delete=models.CASCADE,related_name='comment_user')
+    #投稿主ユーザー
+    user = models.ForeignKey(AppUsers,null=True,blank=True,on_delete=models.CASCADE,related_name='sns_user')
