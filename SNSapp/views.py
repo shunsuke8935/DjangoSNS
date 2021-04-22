@@ -189,6 +189,10 @@ def followfunc(request, user_id, followed_user_id):
         follow_object.save()
         return redirect('list')
 
+def commentfunc(request):
+    test = request
+    print(request)
+
 
 
 

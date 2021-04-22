@@ -1,5 +1,18 @@
 from django.urls import path
-from .views import signupfunc, loginfunc, listfunc, logoutfunc, detailfunc, goodfunc, readfunction, snsCreate, mypagefunc, mypageUpdatefunc,followfunc
+from .views import (
+    signupfunc, 
+    loginfunc, 
+    listfunc, 
+    logoutfunc, 
+    detailfunc, 
+    goodfunc, 
+    readfunction, 
+    snsCreate, 
+    mypagefunc, 
+    mypageUpdatefunc,
+    followfunc,
+    commentfunc
+    )
 
 urlpatterns = [
     path('signup/', signupfunc, name='signup'),
@@ -12,5 +25,6 @@ urlpatterns = [
     path('read/<int:pk>', readfunction, name='read'),
     path('create/', snsCreate, name='create'),
     path('mypage/<int:pk>', mypagefunc, name='mypage'),
-    path('mypageupdate/<int:pk>', mypageUpdatefunc, name='mypageupdate')
+    path('mypageupdate/<int:pk>', mypageUpdatefunc, name='mypageupdate'),
+    path('comment/', commentfunc, name='comment')
 ]

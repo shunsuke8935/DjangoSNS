@@ -70,12 +70,12 @@
       <div class="extra content">
         <div class="ui large transparent left icon input">
           <i class="heart outline icon"></i>
-          <input type="text" placeholder="Add Comment...">          
+          <input type="text" placeholder="Add Comment..." id='comment_{{ forloop.counter }}'>          
         </div>
       </div>
       <div class="extra content">
-        <div class="ui large transparent left icon input">          
-          <button class="ui primary button" type="submit">送信</button>
+        <div class="ui large transparent left icon input" id='comment_button_{{ forloop.counter }}' onclick="test(this.id)">          
+          <a class="ui primary button">送信</a>
         </div>
       </div>
     </div>
@@ -83,8 +83,3 @@
     <!--カード終了-->
   </div>
 {% endblock content %}
-{% block script %}
-  const commentFunc = () =>{
-    console.log('testlist')
-  }
-{% endblock script %}
