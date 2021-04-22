@@ -137,11 +137,18 @@
 
       //コメントを保存する非同期関数
       const test = (id) => {
-        console.log('kakunin')
-        console.log(id)
+        const loop_num = id.replace("comment_button_","")
+        const comment = $(`#comment_${loop_num}`).val()
         const url_comment = '/comment/'
+        const current_user_id = $(`#current_user_${loop_num}`).text()
+        const sns_user_id = $(`#sns_user_${loop_num}`).text()
+        console.log(current_user_id)
+        //current_user_1
+
         const data = {
-          "data": "data",
+          "comment": comment,
+          "current_user_id": current_user_id,
+          "sns_user_id":sns_user_id,
           'csrfmiddlewaretoken': '{{ csrf_token }}'
         }
         $.ajax({

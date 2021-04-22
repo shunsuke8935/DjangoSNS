@@ -2,10 +2,10 @@ from django.shortcuts import render
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import redirect
-from .models import SnsModel,AppUsers,Follow
+from .models import SnsModel,AppUsers,Follow,Coment
 from django.contrib.auth.decorators import login_required
 from django.views.generic import CreateView
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy 
 
 # Create your views here.
 
@@ -191,6 +191,18 @@ def followfunc(request, user_id, followed_user_id):
 
 def commentfunc(request):
     test = request
+    data = request.POST
+    comment_content = data.get('comment', None)
+    current_user_id = data.get('current_user_id', None)
+    sns_user_id = data.get('sns_user_id', None)
+    
+    if comment_content:
+        comment = Coment()
+        comment.comment = comment_content
+        comment.comment_user_id = int(current_user_id)
+        comment.user_id = int(sns_user_id)
+        comment.save()
+
     print(request)
 
 
