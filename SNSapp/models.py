@@ -37,6 +37,7 @@ class Follow(models.Model):
 
 
 class Coment(models.Model):
+    sns = models.ForeignKey(SnsModel , null=True, blank=True, on_delete=models.CASCADE)
     comment = models.TextField(max_length=1000,null=True,blank=True)
     #コメントを投稿したユーザー
     comment_user = models.ForeignKey(AppUsers,null=True,blank=True,on_delete=models.CASCADE,related_name='comment_user')

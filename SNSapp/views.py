@@ -61,6 +61,8 @@ def listfunc(request):
         sns_dict = {}
         sns_dict["sns_obj"] = sns_row
         sns_dict["current_user"] = appuser
+        sns_dict["comment_count"] = len(sns_row.coment_set.all())
+        sns_dict["comment_list"] = sns_row.comment_set.all()
         follow_check = Follow.objects.filter(user=appuser,user_2=sns_row.user).first()
         if follow_check:
             follow_check = True
@@ -195,12 +197,14 @@ def commentfunc(request):
     comment_content = data.get('comment', None)
     current_user_id = data.get('current_user_id', None)
     sns_user_id = data.get('sns_user_id', None)
+    sns_id = data.get('sns_id', None)
     
     if comment_content:
         comment = Coment()
         comment.comment = comment_content
         comment.comment_user_id = int(current_user_id)
         comment.user_id = int(sns_user_id)
+        comment.sns_id = int(sns_id)
         comment.save()
 
     print(request)

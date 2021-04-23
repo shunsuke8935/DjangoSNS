@@ -65,7 +65,8 @@
           {{ object_row.sns_obj.good }} likes
         </a>
         <i class="comment icon"></i>
-        0 comments
+        {{ object_row.comment_count }} comments
+        
       </div>
       <div class="extra content">
         <div class="ui large transparent left icon input">
@@ -78,6 +79,7 @@
           <a class="ui primary button">送信</a>
           <div id="current_user_{{ forloop.counter }}" hidden>{{ object_row.current_user.id }}</div>
           <div id="sns_user_{{ forloop.counter }}" hidden>{{ object_row.sns_obj.user.id }}</div>
+          <div id="sns_{{ forloop.counter }}" hidden>{{ object_row.sns_obj.id }}</div>
         </div>
       </div>
     </div>

@@ -142,13 +142,14 @@
         const url_comment = '/comment/'
         const current_user_id = $(`#current_user_${loop_num}`).text()
         const sns_user_id = $(`#sns_user_${loop_num}`).text()
-        console.log(current_user_id)
+        const sns_id = $(`#sns_${loop_num}`).text()
         //current_user_1
 
         const data = {
           "comment": comment,
           "current_user_id": current_user_id,
           "sns_user_id":sns_user_id,
+          "sns_id":sns_id,
           'csrfmiddlewaretoken': '{{ csrf_token }}'
         }
         $.ajax({
@@ -161,9 +162,11 @@
         })
         .done(function(data) {
             // 通信成功時の処理を記述
+            location.reload();
         })
         .fail(function() {
             // 通信失敗時の処理を記述
+            location.reload();
         });
       }
 
